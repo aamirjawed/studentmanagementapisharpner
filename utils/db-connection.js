@@ -1,41 +1,55 @@
-const mysql = require('mysql2')
+const { Sequelize } = require("sequelize");
 
+const sequelize = new Sequelize("testdb", "root", "8083571820", {
+  host: "localhost",
+  dialect: "mysql",
+});
 
-const connection = mysql.createConnection({
-    host:'localhost',
-    user:"root",
-    password:"8083571820",
-    database:"testdb"
-    
-})
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection to the databases has been created using sequelize");
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
-connection.connect((err) => {
-    if(err){
-        console.log(err)
-        return
-    }
+module.exports = sequelize;
 
-    console.log("Database connection has been created")
+// const mysql = require('mysql2')
 
+// const connection = mysql.createConnection({
+//     host:'localhost',
+//     user:"root",
+//     password:"8083571820",
+//     database:"testdb"
 
-    const creationQuery = `create table if not exists studentManagement(
-        id int auto_increment primary key,
-        name varchar(20),
-        email varchar(20) unique,
-        age int
-    )`
+// })
 
-    connection.execute(creationQuery, (err) =>{
-        if(err){
-            console.log(err)
-            connection.end()
-            return
-        }
+// connection.connect((err) => {
+//     if(err){
+//         console.log(err)
+//         return
+//     }
 
-        console.log('Table is created')
-    })
-})
+//     console.log("Database connection has been created")
 
+//     const creationQuery = `create table if not exists studentManagement(
+//         id int auto_increment primary key,
+//         name varchar(20),
+//         email varchar(20) unique,
+//         age int
+//     )`
 
+//     connection.execute(creationQuery, (err) =>{
+//         if(err){
+//             console.log(err)
+//             connection.end()
+//             return
+//         }
 
-module.exports  = connection
+//         console.log('Table is created')
+//     })
+// })
+
+// module.exports  = connection
