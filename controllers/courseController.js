@@ -1,0 +1,17 @@
+const Courses = require("../models/coursesModel")
+
+
+const addCourse = async (req,res) => {
+    try {
+        const {name} = req.body;
+        const course = await Courses.create({course_name:name})
+
+        res.status(201).json(course)
+    } catch (error) {
+        res.status(500).json({'error':error.message})
+        
+    }
+}
+
+
+module.exports = {addCourse}

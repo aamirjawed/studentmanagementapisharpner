@@ -1,6 +1,9 @@
 const Student = require('./studentModel')
 const IdentityCard = require('./identityModel')
 const Department = require('./departmentModel')
+const Courses = require('./coursesModel')
+const StudentCourses = require('./StudentCourse')
+
 
 
 // one to one association
@@ -9,9 +12,14 @@ const Department = require('./departmentModel')
 Student.hasOne(IdentityCard)
 IdentityCard.belongsTo(Student)
 
-// one to many associaton
+// one to many association
 
 Student.hasMany(Department)
 Department.belongsTo(Student)
 
-module.exports = {Student, IdentityCard, Department}
+// many to many association
+
+Student.belongsToMany(Courses, {through:StudentCourses})
+Courses.belongsToMany(Student, {through:StudentCourses})
+
+module.exports = {Student, IdentityCard, Department, Courses, StudentCourses}
